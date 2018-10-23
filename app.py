@@ -92,3 +92,6 @@ def search_by_keys(search_param):
 
 def error_message(message):
     return json.dumps({'success': False, 'message': message}), 400
+
+if __name__ == '__main__':
+    app.run()
