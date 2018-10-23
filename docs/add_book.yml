@@ -1,0 +1,11 @@
+summary: "Add a book to the collection"
+parameters:
+  - in: "body"
+    name: "body"
+    description: "List of user object"
+    required: true
+responses:
+  200:
+    description: Returns success message
+  400:
+    description: Returns failure message

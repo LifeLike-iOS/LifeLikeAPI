@@ -1,0 +1,12 @@
+summary: "Search for a book by title, author, or ISBN"
+parameters:
+  - name: search_param
+    in: path
+    type: string
+    description: "search parameter"
+    required: true
+responses:
+  200:
+    description: Returns array of objects that match search term
+  400:
+    description: Returns failure message

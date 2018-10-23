@@ -1,0 +1,16 @@
+summary: "Edit a book in the collection"
+parameters:
+  - name: id
+    in: path
+    type: string
+    description: "book id"
+    required: true
+  - in: "body"
+    name: "body"
+    description: "JSON object of parameters to be changed for book"
+    required: true
+responses:
+  200:
+    description: Returns success message
+  400:
+    description: Returns failure message

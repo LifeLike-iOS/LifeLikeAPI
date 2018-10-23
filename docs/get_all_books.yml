@@ -1,0 +1,6 @@
+summary: "List all books in system"
+responses:
+  200:
+    description: Returns all books in the system
+  400:
+    description: Returns failure message
