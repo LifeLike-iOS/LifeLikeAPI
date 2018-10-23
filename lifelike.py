@@ -12,7 +12,6 @@ client = pymongo.MongoClient(url)
 db = client.lifelike
 collection = db.books
 
-
 # ROUTES
 @app.route('/')
 def health_check():
