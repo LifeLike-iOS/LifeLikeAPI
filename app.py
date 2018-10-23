@@ -3,10 +3,15 @@ from flask import Flask, request
 from bson import json_util, ObjectId
 import pymongo
 import json
-# import connexion
+from flasgger import Swagger
 
 # APP SET UP
 app = Flask(__name__)
+app.config['SWAGGER'] = {
+    'title': 'Lifelike Books API'
+}
+swagger = Swagger(app)
+# app = connexion.FlaskApp(__name__, specification_dir='./')
 url = "mongodb://_:%s@stitch.mongodb.com:27020/?authMechanism=PLAIN&authSource=%sexternal&ssl=true&appName=lifelike-biukf:mongodb-atlas:api-key" % ('pE1r3IXYjPGmySQ3fSOT8Fn9ishrFrj6nREzPnFXyy2pEKQvH3DYX5D3jTbgcOzL', '%24')
 client = pymongo.MongoClient(url)
 db = client.lifelike
@@ -15,6 +20,9 @@ collection = db.books
 # ROUTES
 @app.route('/')
 def health_check():
+    """
+    file: ./docs/health_check.yml
+    """
     return 'Heathly!', 200
 
 # List all books
@@ -75,7 +83,6 @@ def delete_book(id):
     except Exception as e:
         return error_message("Failed to delete book with id of " + id)
 
-
 # ADDITIONAL METHODS
 
 # Search function because pymongo indexing is failing
@@ -94,5 +101,8 @@ def error_message(message):
     return json.dumps({'success': False, 'message': message}), 400
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    # port = int(os.environ.get("PORT", 5000))
+    # app.run(host="0.0.0.0", port=port)
+    # app.run()
+    # app.add_api('swagger.yaml', arguments={'title': 'Lifelike Book API'})
+    app.run()
