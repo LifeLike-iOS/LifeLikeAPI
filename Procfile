@@ -1,1 +1,1 @@
-web: gunicorn lifelike:app
+web: gunicorn app:app
