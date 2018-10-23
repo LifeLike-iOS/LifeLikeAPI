@@ -24,6 +24,12 @@ def get_all_books():
     books = collection.find()
     return json_util.dumps(books), 200
 
+# Text search for a book
+@app.route('/books/search/<string:search_param>', methods=["GET"])
+def search_for_book(search_param):
+    results = search_by_keys(search_param)
+    return json_util.dumps(results), 200
+
 # Retrieve a book
 @app.route('/books/<string:id>', methods=['GET'])
 def get_book(id):
@@ -51,3 +57,17 @@ def delete_book(id):
     deleted_book = collection.find_one({"_id": ObjectId(id)})
     collection.delete_one({"_id": ObjectId(id)})
     return json.dumps({'success': True, 'message': deleted_book['title'] + ' deleted!'}), 200
+
+
+# ADDITIONAL METHODS
+# Search function because pymongo indexing is failing
+def search_by_keys(search_param):
+    books = collection.find()
+    results = []
+    for book in books:
+        print(book)
+        if search_param in book['title'] or search_param in book['authors']:
+            results.append(book)
+        elif 'ISBN_13' in book and search_param == book['ISBN_13']:
+            results.append(book)
+    return results
